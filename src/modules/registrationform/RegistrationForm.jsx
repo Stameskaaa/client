@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import { useState } from 'react';
 import styles from './registrationform.module.scss';
 import { InputForm } from './inputform/InputForm';
-import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
 import { authStateCheck } from '../../UI/slices/authSlice';
 import { SuccessRegistration } from './succesregistration/SuccessRegistration';

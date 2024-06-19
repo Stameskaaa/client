@@ -58,7 +58,7 @@ export const PhotosMain = () => {
         return sendPhoto(formData);
       });
       try {
-        const responses = await Promise.all(promises);
+        await Promise.all(promises);
         setLoading(true);
         getPhotos();
       } catch (error) {
@@ -93,6 +93,7 @@ export const PhotosMain = () => {
               if (imageObj !== '')
                 return (
                   <img
+                    alt="img"
                     className={styles.img}
                     key={i}
                     onClick={() => {

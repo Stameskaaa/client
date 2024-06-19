@@ -33,7 +33,7 @@ export const NewsPage = () => {
             setResultArr(result.articles);
           } else {
             console.log('else');
-            console.log(currentPage);
+            console.log(currentPage, pageCount);
 
             setResultArr((prev) => [...prev, ...result.articles]);
           }

@@ -6,10 +6,6 @@ export const PostList = memo(({ userData, posts }) => {
   return (
     <>
       {posts.map((v, i) => {
-        // if (i === 7) {
-        //   return null;
-        // }
-
         return (
           <div key={i} className={styles.rightside_post_container}>
             {i === 0 ? null : <hr className={styles.hr} />}
@@ -29,6 +25,7 @@ export const PostList = memo(({ userData, posts }) => {
                 {v.photos.map((imageObj, i) => {
                   return (
                     <img
+                      alt="img"
                       className={styles.post__photo}
                       key={i}
                       src={URL.createObjectURL(imageObj)}
@@ -42,6 +39,7 @@ export const PostList = memo(({ userData, posts }) => {
                 {v.files.map((imageObj, i) => {
                   return (
                     <img
+                      alt="img"
                       className={styles.post__photo}
                       key={i}
                       src={`data:image/png;base64,${imageObj.buffer}`}

@@ -90,14 +90,14 @@ export const RightSideChat = () => {
   };
 
   useEffect(() => {
-    socket.on('clientJoined', (message) => {}); // check
+    socket.on('clientJoined', () => {}); // check
     return () => {
       socket.off('clientJoined');
     };
   }, []);
 
   useEffect(() => {
-    socket.on('disconnectUser', (data) => {}); // check
+    socket.on('disconnectUser', () => {}); // check
     return () => {
       socket.off('disconnectUser');
     };
@@ -143,7 +143,7 @@ export const RightSideChat = () => {
   const sendMess = async () => {
     if (value) {
       if (chatExist !== '' && !chatExist) {
-        const data = await createChat();
+        await createChat();
       }
       socket.emit('message', {
         data: { user: firstUser, message: value, time: currentTime, status: 'read' },

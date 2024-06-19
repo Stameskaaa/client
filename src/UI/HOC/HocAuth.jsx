@@ -7,7 +7,6 @@ import { loginUser } from '../api/api';
 export const LoginPage = ({ children }) => {
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.auth.authState);
-  const [auth, setAuth] = useState(authState);
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const authCheck = async (log, pass) => {
@@ -16,10 +15,10 @@ export const LoginPage = ({ children }) => {
         await loginUser(log, pass).then((response) => {
           if (response.data) {
             dispatch(authStateCheck({ flag: true, infoPerson: response.data[0] }));
-            setAuth(true);
           }
         });
       } catch (error) {
+        console.log(error);
       } finally {
         setLoginValue('');
         setPasswordValue('');

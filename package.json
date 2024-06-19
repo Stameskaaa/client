@@ -37,15 +37,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "eslint:recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:jsx-a11y/recommended"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -60,15 +51,5 @@
   },
   "resolutions": {
     "react-i18next": ">=11.16.4"
-  },
-  "devDependencies": {
-    "@eslint/compat": "^1.1.0",
-    "@eslint/js": "^9.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.34.3",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "globals": "^15.6.0",
-    "typescript-eslint": "^7.13.1"
   }
 }

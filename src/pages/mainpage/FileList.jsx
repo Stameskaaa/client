@@ -13,7 +13,7 @@ export const FileList = ({ files, setFiles }) => {
       {files.map((file, i) => {
         return (
           <div key={i} className={styles.input_file_list_item}>
-            <img className={styles.input_file_list_img} src={URL.createObjectURL(file)} />
+            <img alt="img" className={styles.input_file_list_img} src={URL.createObjectURL(file)} />
             <span className={styles.input_file_list_name}>{file.name}</span>
             <a className={styles.input_file_list_remove} onClick={() => removeItem(i)}>
               x
