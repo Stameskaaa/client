@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
 export const FullScreen = ({
-  src = 'https://i.pinimg.com/originals/a7/29/6e/a7296e09a76b5acda246b7c8bae20c43.jpg',
+  src = process.env.src,
   onClick = null,
   onClickInner = null,
   arrPhoto,
