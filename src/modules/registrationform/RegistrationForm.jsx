@@ -44,12 +44,9 @@ export const RegistrationForm = () => {
         });
       } catch (error) {
         console.log(error?.message);
-      } finally {
-        console.log(authState);
       }
     }
   };
-  console.log(authState);
   if (!authState) {
     return (
       <div className={styles.container}>
