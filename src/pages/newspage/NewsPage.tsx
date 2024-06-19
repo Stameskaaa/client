@@ -43,7 +43,7 @@ export const NewsPage = () => {
   }, [currentPage, parametrs]);
 
   useEffect(() => {
-    let observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           // console.log('Пользователь почти докрутил до картинки!');

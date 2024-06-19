@@ -95,7 +95,7 @@ const getPhotos = async (name) => {
 };
 
 const uploadChat = async (log, log2) => {
-  const response = await axios.get(`uploadchat?log1=${log}&log2=${log2}`);
+  const response = await axios.get(`${src}/uploadchat?log1=${log}&log2=${log2}`);
   return response;
 };
 
