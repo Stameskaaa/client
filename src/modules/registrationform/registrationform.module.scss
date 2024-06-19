@@ -1,0 +1,30 @@
+.container {
+  min-width: 150px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 70%;
+  border: 1px solid var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 13px;
+  color: white;
+  text-align: center;
+  .input {
+    color: #c6c6e1;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 5px;
+  }
+}

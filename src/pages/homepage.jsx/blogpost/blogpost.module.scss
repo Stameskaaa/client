@@ -1,0 +1,140 @@
+.container {
+  width: 100%;
+  background-color: var(--color-lighterdark);
+  color: var(--color-tertiary);
+  min-height: 400px;
+  margin-bottom: 15px;
+
+  .time {
+    position: absolute;
+    right: 0;
+    margin-left: auto;
+    align-self: self-start;
+    padding-right: 15px;
+    padding-top: 5px;
+  }
+  .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .button_showmore {
+    background-color: var(--color-lighterdark);
+    color: var(--color-primary);
+    border: 1x solid black;
+    padding: 3px;
+    width: auto;
+    font-size: 1.1em;
+    margin: 5px;
+
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+      background-color: var(--color-primary);
+      color: black;
+    }
+    &:active {
+      color: var(--color-accent);
+    }
+  }
+  p {
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 1.1em;
+    width: 95%;
+    text-align: justify;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 1;
+    max-height: 270px;
+    line-height: 1.2;
+    height: calc(1.2 * 5);
+  }
+  .container_name {
+    position: relative;
+    font-size: 1.3em;
+    @media (max-width: 550px) {
+      font-size: 1em;
+    }
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    padding-bottom: 10px;
+  }
+  .hr {
+    width: 90%;
+    border: 0.3px solid var(--color-tertiary);
+  }
+  .BlogImage {
+    @media (max-width: 550px) {
+      height: 100px;
+      width: 100px;
+    }
+    margin-left: 10px;
+
+    height: 140px;
+    width: 140px;
+  }
+}
+.container__button {
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+}
+
+.container__photo {
+  padding: 10px;
+  padding-top: 10px;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+  }
+}
+.image {
+  max-height: 200px;
+  max-width: 400px;
+}
+.button {
+  background-color: var(--color-lighterdark);
+  color: var(--color-primary);
+  border: 1x solid black;
+  padding: 3px;
+  width: 65px;
+  font-size: 1.1em;
+  margin: 5px;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: var(--color-primary);
+    color: black;
+  }
+  &:active {
+    color: var(--color-accent);
+  }
+}

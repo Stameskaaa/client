@@ -1,0 +1,60 @@
+.input_container {
+  margin: 10px;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.input {
+  align-self: flex-start;
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.photo_container {
+  box-sizing: border-box;
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  overflow: hidden;
+  overflow-x: auto;
+  .img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    max-height: 200px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: hwb(176 27% 46%);
+  }
+}
+.container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: start;
+  gap: 10px;
+  box-sizing: border-box;
+}

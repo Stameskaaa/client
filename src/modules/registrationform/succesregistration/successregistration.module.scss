@@ -1,0 +1,15 @@
+.container {
+  color: var(--color-tertiary);
+  font-size: 3em;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3em;
+  .loading {
+    width: 150px;
+    height: 150px;
+  }
+}

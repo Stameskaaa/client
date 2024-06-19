@@ -1,0 +1,96 @@
+.inputWrapper {
+  position: relative;
+  display: inline-block;
+}
+.input_image {
+  width: 50px;
+  height: 50px;
+}
+.user_block {
+  transition: all 0.3s;
+  min-height: 50px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  overflow: hidden;
+  transition: scale 0.3;
+  border-bottom: 1px solid transparent;
+  padding: 3px;
+  &:hover {
+    scale: 1.05;
+    border-bottom: 1px solid var(--color-secondary);
+  }
+}
+
+.input {
+  border: none;
+  color: var(--color-secondary);
+  background-color: transparent;
+  border-bottom: 2px solid black;
+  transition: all 0.4s ease-in-out;
+  padding: 12px 25px;
+  border-radius: 3px;
+  background-image: url('https://www.svgrepo.com/show/7109/search.svg');
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  outline: none;
+
+  &::placeholder {
+    color: black;
+  }
+
+  &:focus {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  &::selection {
+    color: var(--color-accent);
+    background-color: var(--color-lighterdark);
+  }
+}
+
+.belowInput {
+  @media (max-width: 900px) {
+    display: none;
+  }
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 450px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-tertiary);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-tertiary);
+  }
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  z-index: 1;
+  border-radius: 0 0 10px 10px;
+  background-color: var(--color-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 600px) {
+    padding: 5px;
+  }
+}

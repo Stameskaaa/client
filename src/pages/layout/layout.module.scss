@@ -1,0 +1,10 @@
+.LayoutBackground {
+  background-color: var(--color-dark);
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+.wrapperUnderHeader {
+  display: flex;
+  justify-content: center;
+}

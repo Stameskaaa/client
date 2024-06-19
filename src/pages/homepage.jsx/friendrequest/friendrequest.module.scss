@@ -1,0 +1,48 @@
+.container {
+  width: 100%;
+  background-color: var(--color-lighterdark);
+  color: var(--color-tertiary);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+.img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+.container_button {
+  text-align: center;
+  width: 90%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  button {
+    max-height: 35px;
+    text-align: center;
+    background-color: var(--color-lighterdark);
+    color: var(--color-primary);
+    border: 1x solid black;
+    padding: 3px;
+    width: 50%;
+    font-size: 1.1em;
+    margin: 5px;
+
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+      background-color: var(--color-primary);
+      color: black;
+    }
+    &:active {
+      color: var(--color-accent);
+    }
+  }
+}

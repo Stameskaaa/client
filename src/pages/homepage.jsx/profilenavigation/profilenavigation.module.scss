@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  background-color: var(--color-lighterdark);
+  width: 100%;
+  margin-bottom: 20px;
+  color: var(--color-tertiary);
+  button {
+    background-color: var(--color-lighterdark);
+    color: var(--color-tertiary);
+    cursor: pointer;
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-secondary);
+    }
+    border: none;
+    height: 35px;
+  }
+}

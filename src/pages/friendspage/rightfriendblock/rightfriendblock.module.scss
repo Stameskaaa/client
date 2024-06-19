@@ -1,0 +1,29 @@
+.container {
+  @media (max-width: 650px) {
+    display: none;
+  }
+
+  color: var(--color-tertiary);
+  width: 28%;
+  margin: 10px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  li:hover {
+    background-color: var(--color-primary);
+    color: var(--color-dark);
+  }
+  li {
+    &.active {
+      background-color: var(--color-primary);
+      color: var(--color-dark);
+    }
+
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: var(--color-lighterdark);
+    height: 20px;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,25 @@
+.container {
+  margin: 0px;
+  width: 100%;
+  min-height: 70px;
+  background-color: var(--color-lighterdark);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--color-tertiary);
+  padding: 15px 0px 15px 0px;
+  align-items: center;
+  p {
+    width: 90%;
+    overflow: hidden;
+    margin: 2px;
+  }
+}
+.profileImage {
+  height: 90px;
+  width: 90px;
+  cursor: pointer;
+}
+.hr {
+  width: 80%;
+}

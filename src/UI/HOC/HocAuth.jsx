@@ -1,0 +1,55 @@
+import { Button, Input } from '@mui/material';
+import { useState } from 'react';
+import { authStateCheck } from '../slices/authSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/hook';
+import styles from './hocauth.module.scss';
+import { loginUser } from '../api/api';
+export const LoginPage = ({ children }) => {
+  const dispatch = useAppDispatch();
+  const authState = useAppSelector((state) => state.auth.authState);
+  const [auth, setAuth] = useState(authState);
+  const [loginValue, setLoginValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const authCheck = async (log, pass) => {
+    if (log && pass)
+      try {
+        await loginUser(log, pass).then((response) => {
+          if (response.data) {
+            dispatch(authStateCheck({ flag: true, infoPerson: response.data[0] }));
+            setAuth(true);
+          }
+        });
+      } catch (error) {
+      } finally {
+        setLoginValue('');
+        setPasswordValue('');
+      }
+  };
+
+  if (!authState) {
+    return (
+      <div className={styles.containerforcontainer}>
+        <label style={{ color: '#c5c6c7' }}>Авторизация</label>
+        <hr style={{ width: '80%' }} />
+        <div className={styles.container}>
+          <Input
+            placeholder="Login"
+            type="text"
+            value={loginValue}
+            onChange={(e) => setLoginValue(e.target.value)}
+            style={{ color: '#c5c6c7' }}
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            value={passwordValue}
+            onChange={(e) => setPasswordValue(e.target.value)}
+            style={{ color: '#c5c6c7' }}
+          />
+          <Button onClick={() => authCheck(loginValue, passwordValue)}>send</Button>
+        </div>
+      </div>
+    );
+  }
+  return children;
+};

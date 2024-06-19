@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 100%;
+}
+.input {
+  padding: 10px 5px 10px 5px;
+  font-size: 13px;
+  border: none;
+  width: 80%;
+  color: var(--color-tertiary);
+  background-color: transparent;
+  color: var(--color-tertiary);
+  transition: all 0.4s ease-in-out;
+  border-radius: 3px;
+  align-self: flex-start;
+  &:focus {
+    background-color: none;
+    border: none;
+  }
+  &::placeholder {
+    font-size: 1.2em;
+    color: var(--color-tertiary);
+  }
+  outline: none;
+  &::selection {
+    color: var(--color-accent);
+
+    background-color: var(--color-lighterdark);
+  }
+  resize: none;
+  // rows: 2;
+  overflow-y: hidden;
+}
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  font-size: 2em;
+  cursor: pointer;
+  border-left: 1px solid var(--color-tertiary);
+  border-radius: 0 5px 5px 0;
+  &:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary);
+    .smile_container {
+      display: block;
+    }
+  }
+  padding: 2px;
+}
+
+.smile_container {
+  box-sizing: border-box;
+  padding: 10px;
+  display: none;
+  bottom: 90px;
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background-color: var(--color-secondary);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid white;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 2em;
+  overflow-y: scroll;
+  @media (max-width: 800px) {
+    width: 250px;
+    height: 250px;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+  }
+}
+.visible {
+  display: flex;
+}
+
+.sendmess_container {
+  flex: 0 0 auto;
+  border: 1px solid var(--color-tertiary);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+}

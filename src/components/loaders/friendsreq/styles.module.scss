@@ -1,0 +1,46 @@
+.container {
+  width: 100%;
+  max-width: 300px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  border-radius: 5px;
+}
+
+.animation {
+  background: linear-gradient(
+    90deg,
+    rgba(236, 236, 236, 0.3) 25%,
+    rgba(236, 236, 236, 0.8) 50%,
+    rgba(236, 236, 236, 0.3) 75%
+  );
+  background-size: 200% 100%;
+  animation: loadingAnimation 5s linear infinite;
+}
+
+.img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.text {
+  width: 100%;
+  height: 50px;
+
+  border-radius: 5px;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

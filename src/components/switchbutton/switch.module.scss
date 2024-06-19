@@ -1,0 +1,60 @@
+// ThemeToggleButton.module.scss
+
+:root {
+  --color-primary: #3498db;
+  --color-secondary: #95a5a6;
+  --color-light: #f0f0f0;
+  --color-dark: #2c3e50;
+}
+
+html[data-theme='light'] {
+  --button-background: var(--color-light);
+  --button-icon: var(--color-primary);
+}
+
+html[data-theme='dark'] {
+  --button-background: var(--color-dark);
+  --button-icon: var(--color-secondary);
+}
+
+.themeToggleButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--button-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  .icon {
+    font-size: 24px;
+    transition: transform 0.3s, color 0.3s;
+  }
+}
+
+.light {
+  background-color: var(--color-light);
+  .icon {
+    color: var(--color-primary);
+    transform: rotate(0deg);
+  }
+}
+
+.dark {
+  background-color: var(--color-dark);
+  .icon {
+    color: var(--color-secondary);
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,12 @@
+.Button {
+  width: 45px;
+  height: 45px;
+  color: var(--color-secondary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.5s ease-in-out;
+  padding-left: 10px;
+  &:hover {
+    opacity: 80%;
+  }
+}

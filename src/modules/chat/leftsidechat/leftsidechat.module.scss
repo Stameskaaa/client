@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-self: center;
+  height: 100%;
+  // overflow: hidden;
+}
+.user_container {
+  height: 500px;
+  height: 90%;
+  overflow: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: hwb(176 27% 46%);
+  }
+}
+.input {
+  border: none;
+
+  color: var(--color-tertiary);
+  background-color: transparent;
+  border-bottom: 2px solid var(--color-primary);
+  transition: all 0.4s ease-in-out;
+  padding: 12px 25px;
+  border-radius: 3px;
+
+  &:focus {
+    background-color: none;
+    border: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid var(--color-accent);
+  }
+  &::placeholder {
+    color: var(--color-primary);
+    font-size: 1.2em;
+  }
+
+  outline: none;
+  &::selection {
+    color: var(--color-accent);
+
+    background-color: var(--color-lighterdark);
+  }
+}
