@@ -12,7 +12,6 @@ export const Input = ({ styleObj, onChange, value }) => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [focus, setFocus] = useState(false);
-  const [timer, setTimer] = useState(null);
   const navigate = useNavigate();
   const ref = useClickOutside(() => setFocus(false));
 

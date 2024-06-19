@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const src = 'https://server-production-2c42.up.railway.app';
 const getUser = async (name) => {
   try {
-    const response = await axios.get(`http://localhost:5000/getuser?name=${name}`, {
+    const response = await axios.get(`${src}/getuser?name=${name}`, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -15,9 +16,7 @@ const getUser = async (name) => {
 };
 
 const getUserList = async (name, type) => {
-  const response = await axios.get(
-    `http://localhost:5000/getuserlist?name=${name}&type=${type.toLowerCase()}`,
-  );
+  const response = await axios.get(`${src}/getuserlist?name=${name}&type=${type.toLowerCase()}`);
   if (Array.isArray(response.data)) {
     return response.data.filter((v) => v);
   } else {
@@ -27,7 +26,7 @@ const getUserList = async (name, type) => {
 
 const addFriend = async (log, log2) => {
   try {
-    const response = await axios.patch(`http://localhost:5000/addfriend?name=${log}`, {
+    const response = await axios.patch(`${src}/addfriend?name=${log}`, {
       user: log2,
     });
     return response;
@@ -38,7 +37,7 @@ const addFriend = async (log, log2) => {
 
 const cancelSub = async (log, log2) => {
   try {
-    const response = await axios.patch(`http://localhost:5000/cancelsub?name=${log}`, {
+    const response = await axios.patch(`${src}/cancelsub?name=${log}`, {
       user: log2,
     });
     return response;
@@ -49,7 +48,7 @@ const cancelSub = async (log, log2) => {
 
 const deletefriend = async (log, log2) => {
   try {
-    const response = await axios.patch(`http://localhost:5000/deletefriend?name=${log}`, {
+    const response = await axios.patch(`${src}/deletefriend?name=${log}`, {
       user: log2,
     });
     return response;
@@ -60,7 +59,7 @@ const deletefriend = async (log, log2) => {
 
 const subscribe = async (log, log2) => {
   try {
-    const response = await axios.patch(`http://localhost:5000/subscribe?name=${log}`, {
+    const response = await axios.patch(`${src}/subscribe?name=${log}`, {
       user: log2,
     });
     return response;
@@ -71,9 +70,7 @@ const subscribe = async (log, log2) => {
 
 const checkdependence = async (log, log2) => {
   try {
-    const response = await axios.get(
-      `http://localhost:5000/checkdependence?log=${log}&log2=${log2}`,
-    );
+    const response = await axios.get(`${src}/checkdependence?log=${log}&log2=${log2}`);
     return response;
   } catch (error) {
     console.log(error);
@@ -82,18 +79,18 @@ const checkdependence = async (log, log2) => {
 
 const uploadMessage = async (name) =>
   axios.post(
-    'http://localhost:5000/uploadmessage',
+    `${src}/uploadmessage`,
     { user: name },
     { headers: { 'Content-Type': 'multipart/form-data' } },
   );
 
 const getUserChats = async (name) => {
-  const response = await axios.get(`http://localhost:5000/getuserchats?name=${name}`);
+  const response = await axios.get(`${src}/getuserchats?name=${name}`);
   return response;
 };
 
 const getPhotos = async (name) => {
-  const response = await axios.get(`http://localhost:5000/getphotos?name=${name}`);
+  const response = await axios.get(`${src}/getphotos?name=${name}`);
   return response;
 };
 
@@ -104,7 +101,7 @@ const uploadChat = async (log, log2) => {
 
 const getPersonalMessage = async (firstUser, secondUser) => {
   const response = await axios.post(
-    'http://localhost:5000/personalMessage',
+    `${src}/personalMessage`,
     { firstUserData: firstUser, secondUserData: secondUser },
     { headers: { 'Content-Type': 'multipart/form-data' } },
   );
@@ -113,7 +110,7 @@ const getPersonalMessage = async (firstUser, secondUser) => {
 
 const sendMessage = async (firstUser, secondUser, value, currentTime) => {
   const data = await axios.post(
-    'http://localhost:5000/sendMessage',
+    `${src}/sendMessage`,
     {
       firstUserData: firstUser,
       secondUserData: secondUser,
@@ -125,13 +122,13 @@ const sendMessage = async (firstUser, secondUser, value, currentTime) => {
 };
 
 const getAllUsers = async (name) => {
-  const request = await axios.get(`http://localhost:5000/getallusers?first=${name}`);
+  const request = await axios.get(`${src}/getallusers?first=${name}`);
   return request;
 };
 
 const sendPost = async (formData) => {
   const request = await axios.post(
-    'http://localhost:5000/sendPost',
+    `${src}/sendPost`,
 
     formData,
     {
@@ -144,7 +141,7 @@ const sendPost = async (formData) => {
 };
 
 const sendPhoto = async (formData) => {
-  axios.post('http://localhost:5000/sendPhoto', formData, {
+  axios.post(`${src}/sendPhoto`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -153,7 +150,7 @@ const sendPhoto = async (formData) => {
 
 const loginUser = async (log, pass) => {
   const request = await axios.post(
-    'http://localhost:5000/loginUser',
+    `${src}/loginUser`,
     {
       log,
       pass,
@@ -169,7 +166,7 @@ const loginUser = async (log, pass) => {
 
 const registration = async (regAcc) => {
   const request = await axios.post(
-    'http://localhost:5000/registrationUser',
+    `${src}/registrationUser`,
     {
       ...regAcc,
       img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdqPDruWzKi4agbBsfj80B6vm2C8iWHSGsjbGoSFxg8w&s',
