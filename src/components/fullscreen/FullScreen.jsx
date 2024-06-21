@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 
 export const FullScreen = ({
-  src = process.env.src,
+  src = process.env.REACT_APP_SRC,
   onClick = null,
   onClickInner = null,
   arrPhoto,

@@ -1,14 +1,24 @@
 import { Button, Input } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { authStateCheck } from '../slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/hook';
 import styles from './hocauth.module.scss';
 import { loginUser } from '../api/api';
 export const LoginPage = ({ children }) => {
   const dispatch = useAppDispatch();
-  const authState = useAppSelector((state) => state.auth.authState);
+  const auth = useAppSelector((state) => state.auth);
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('profileData')) {
+      const userData = JSON.parse(localStorage.getItem('profileData'));
+      dispatch(authStateCheck({ flag: true, infoPerson: userData }));
+    } else if (auth.profileData.name !== 'loading') {
+      localStorage.setItem('profileData', JSON.stringify(auth.profileData));
+    }
+  }, [auth.authState]);
+
   const authCheck = async (log, pass) => {
     if (log && pass)
       try {
@@ -25,7 +35,7 @@ export const LoginPage = ({ children }) => {
       }
   };
 
-  if (!authState) {
+  if (!auth.authState) {
     return (
       <div className={styles.containerforcontainer}>
         <label style={{ color: '#c5c6c7' }}>Авторизация</label>

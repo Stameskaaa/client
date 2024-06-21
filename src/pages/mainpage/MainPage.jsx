@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './mainpage.module.scss';
-import { useAppSelector } from '../../UI/hooks/hook';
+import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 import { LiaUserFriendsSolid } from 'react-icons/lia';
@@ -10,9 +10,13 @@ import { FaPen } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { UnSub } from './UnSub';
 import { ProfileImage } from '../../components/profileimage/ProfileImage';
-import { cancelSub, checkdependence, deletefriend, getUser } from '../../UI/api/api';
-import { CircularProgress } from '@mui/material';
+import { cancelSub, checkdependence, deletefriend, getUser, subscribe } from '../../UI/api/api';
 import { FullScreen } from '../../components/fullscreen/FullScreen';
+import { ImExit } from 'react-icons/im';
+import { resetStore } from '../../UI/slices/authSlice';
+import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
+import { CircularProgress } from '@mui/material';
+
 export const MainPage = () => {
   const profileObj = useAppSelector((state) => state.auth.profileData);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -21,9 +25,10 @@ export const MainPage = () => {
   const [info, setInfo] = useState('');
   const [status, setStatus] = useState('');
   const location = useLocation();
-
+  const dispatch = useAppDispatch();
   let privateProfile;
   const navigate = useNavigate();
+  const [buttonLoading, setButtonLoading] = useState(false);
   name === profileObj.name ? (privateProfile = true) : (privateProfile = false);
   let headerItems = [
     ['Posts', <FaPen />, false, `/mainpage/${name}/posts`],
@@ -46,32 +51,29 @@ export const MainPage = () => {
     }
   }, [location.state]);
 
-  const cancelSubReq = async (name) => {
+  const handleRequest = async (name, func) => {
     try {
-      const response = await cancelSub(profileObj.name, name);
-      console.log(response.data);
+      setButtonLoading(true);
+      const response = await func(profileObj.name, name);
+      dispatch(changeCurrentNotifcation({ text: response.data.text }));
     } catch (error) {
       console.log(error);
+    } finally {
+      fetchData();
+      setButtonLoading(false);
     }
-    fetchData();
   };
 
-  const deleteFriend = async (name) => {
-    try {
-      const response = await deletefriend(profileObj.name, name);
-      console.log(response.data.text);
-    } catch (error) {
-      console.log(error);
-    }
-    fetchData();
+  const cancelSubReq = (name) => {
+    handleRequest(name, cancelSub);
   };
-  const subscribe = async (name) => {
-    try {
-      await subscribe(profileObj.name, name);
-    } catch (error) {
-      console.log(error);
-    }
-    fetchData();
+
+  const deleteFriendReq = () => {
+    handleRequest(name, deletefriend);
+  };
+
+  const subscribeReq = (name) => {
+    handleRequest(name, subscribe);
   };
 
   const fetchData = async () => {
@@ -90,32 +92,56 @@ export const MainPage = () => {
     fetchData();
   }, [privateProfile]);
 
+  const leaveAccount = () => {
+    localStorage.removeItem('profileData');
+    dispatch(resetStore());
+  };
+
+  const objectStatus = {
+    friends: ['Delete', deleteFriendReq],
+    subscriber: ['Add', subscribeReq, 'Delete', cancelSubReq],
+    subscribed: ['Cancel', cancelSubReq],
+    nothing: ['Add', subscribeReq],
+  };
+
+  const arrayInfo = [
+    ['Followers', 'subscriber'],
+    ['Following', 'subscribed'],
+    ['Friends', 'friends'],
+  ];
+
   return (
     <div className={styles.main_container}>
       <div className={styles.banner}>
         <div className={styles.button_container}>
           {privateProfile ? (
-            <button onClick={() => navigate(`/editprofile/${profileObj.name}`)}>
-              <FaEdit /> Edit Profile
-            </button>
+            <>
+              <button onClick={leaveAccount}>
+                <ImExit />
+                Leave
+              </button>
+              <button onClick={() => navigate(`/editprofile/${profileObj.name}`)}>
+                <FaEdit /> Edit Profile
+              </button>
+            </>
           ) : (
             <>
               {status === 'loading' ? (
-                <CircularProgress />
-              ) : status === 'friends' ? (
-                <UnSub onClick={() => deleteFriend(name)} text={'Delete'} />
-              ) : status === 'subscriber' ? (
+                <CircularProgress size={25} />
+              ) : objectStatus[status] ? (
                 <>
-                  <UnSub onClick={() => subscribe(name)} text={'Add'} />
-                  <UnSub onClick={() => cancelSubReq(name)} text={'Delete'} />
-                </>
-              ) : status === 'subscribed' ? (
-                <>
-                  <UnSub onClick={() => cancelSub(name)} text={'Cancel'} />
-                </>
-              ) : status === 'nothing' ? (
-                <>
-                  <UnSub onClick={() => subscribe(name)} text={'Add'} />
+                  <UnSub
+                    buttonLoading={buttonLoading}
+                    onClick={() => objectStatus[status][1](name)}
+                    text={objectStatus[status][0]}
+                  />
+                  {objectStatus[status].length > 2 ? (
+                    <UnSub
+                      buttonLoading={buttonLoading}
+                      onClick={() => objectStatus[status][3](name)}
+                      text={objectStatus[status][2]}
+                    />
+                  ) : null}
                 </>
               ) : (
                 <div>Unknown status</div>
@@ -146,22 +172,18 @@ export const MainPage = () => {
                 <p>
                   {info.name} {info.lastName !== 'unknown' ? info.lastName : null}
                 </p>
-                <div>
-                  Followers:{' '}
-                  <p>
-                    {info.subscriber.length - 1 !== 0 ? `${info.subscriber.length - 1} ч.` : 'none'}
-                  </p>
-                </div>
-                <div>
-                  Following:{' '}
-                  <p>
-                    {info.subscribed.length - 1 !== 0 ? `${info.subscribed.length - 1} ч.` : 'none'}
-                  </p>
-                </div>
-                <div>
-                  Friends:{' '}
-                  <p>{info.friends.length - 1 !== 0 ? `${info.friends.length - 1} ч.` : 'none'}</p>
-                </div>
+                {arrayInfo.map((value, i) => {
+                  return (
+                    <div key={i}>
+                      {value[0]}:{' '}
+                      <p>
+                        {info[value[1]].length - 1 !== 0
+                          ? `${info[value[1]].length - 1} ч.`
+                          : 'none'}
+                      </p>
+                    </div>
+                  );
+                })}
                 <div>
                   Posts:{' '}
                   <p>

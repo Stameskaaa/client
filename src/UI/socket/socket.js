@@ -1,4 +1,4 @@
 import io from 'socket.io-client';
-const src = 'https://server-production-2c42.up.railway.app';
+const src = process.env.src;
 
 export const socket = io(src);

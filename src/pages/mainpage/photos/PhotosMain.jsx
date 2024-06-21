@@ -24,6 +24,7 @@ export const PhotosMain = () => {
   const getPhotosReq = async function () {
     try {
       let data = await getPhotos(name);
+
       setPhotos(data.data);
     } catch (error) {
       console.log(error);
@@ -44,6 +45,7 @@ export const PhotosMain = () => {
 
   const sendPosts = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (files.length > 0) {
       const promises = files.map(async (file) => {
@@ -59,8 +61,7 @@ export const PhotosMain = () => {
       });
       try {
         await Promise.all(promises);
-        setLoading(true);
-        getPhotos();
+        getPhotosReq();
       } catch (error) {
         console.log(error);
       }

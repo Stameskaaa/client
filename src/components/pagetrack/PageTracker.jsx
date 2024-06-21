@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { updateCurrentPage } from '../../UI/slices/authSlice';
+import { useAppDispatch } from '../../UI/hooks/hook';
 export const PageTracker = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
+
+  const dispatch = useAppDispatch();
   const arr = ['friends', 'message', 'mainpage', 'editprofile'];
   useEffect(() => {
     for (let i = 0; i < arr.length; i++) {

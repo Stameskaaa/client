@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from '../slices/authSlice';
 import loadingSlice from '../slices/loadingSlice';
+import notificationSlice from '../slices/notificationSlice';
 
 export const store = configureStore({
-  reducer: { auth: authSlice, loading: loadingSlice },
+  reducer: { auth: authSlice, loading: loadingSlice, notificate: notificationSlice },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

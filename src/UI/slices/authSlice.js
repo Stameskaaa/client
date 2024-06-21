@@ -60,6 +60,9 @@ const authSlice = createSlice({
     updateCurrentPage(state, actions) {
       state.currentPage = actions.payload;
     },
+    resetStore() {
+      return initialState;
+    },
   },
   // extraReducers: (builder) => {
   //   builder.addCase(fetchUserById.pending, () => {}),
@@ -68,5 +71,6 @@ const authSlice = createSlice({
   // },
 });
 
-export const { authStateCheck, updateProfileData, updateCurrentPage } = authSlice.actions;
+export const { authStateCheck, updateProfileData, updateCurrentPage, resetStore } =
+  authSlice.actions;
 export default authSlice.reducer;

@@ -1,25 +1,42 @@
 import styles from './editprofile.module.scss';
-import { useAppSelector } from '../../UI/hooks/hook';
-import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
+import { useState } from 'react';
 import { ProfileImage } from '../../components/profileimage/ProfileImage';
 import { DefaultButton } from '../../components/button/DefaultButton';
 import { Input } from './Input';
 import { UploadImage } from './UploadImage';
+import { changeProfileData } from '../../UI/api/api';
+import { updateProfileData } from '../../UI/slices/authSlice';
+import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
+
 export const Profile = () => {
+  const dispatch = useAppDispatch();
   const profileData = useAppSelector((state) => state.auth.profileData);
   const [flag, setFlag] = useState(false);
   const [changeData, setChangeData] = useState({});
   const [showUploadImage, setShowUploadImage] = useState(false);
-  function changeFlag(event) {
+  async function changeFlag(event) {
     event.preventDefault();
     setFlag((prev) => !prev);
-  }
-
-  useEffect(() => {
     if (Object.keys(changeData).length !== 0) {
-      console.log(changeData);
+      const data = await changeProfileData(changeData, profileData.name);
+      if (data?.data?.acknowledged) {
+        dispatch(
+          changeCurrentNotifcation({
+            text: 'Данные успешно обновлены',
+          }),
+        );
+        dispatch(updateProfileData({ ...profileData, ...changeData }));
+      } else {
+        dispatch(
+          changeCurrentNotifcation({
+            text: 'Произошла ошибка',
+          }),
+        );
+      }
+      setChangeData({});
     }
-  }, [changeData]);
+  }
 
   return (
     <>
@@ -50,20 +67,20 @@ export const Profile = () => {
           <div className={`${styles.cardBody} ${styles.accountDetails}`}>
             <form onSubmit={changeFlag}>
               {[
-                ['First Name', 'Denis'],
-                ['Last Name', 'Valerevich'],
-                ['Location', 'New York, USA'],
-                ['Gender', 'Woman'],
-                ['Age', '15'],
-                ['Work', 'Teacher'],
+                ['Last Name', 'Valerevich', 'lastName'],
+                ['Location', 'New York, USA', 'location'],
+                ['Gender', 'Woman', 'gender'],
+                ['Age', '15', 'age'],
+                ['Work', 'Teacher', 'work'],
+                ['Martial Status', 'Married', 'martialStatus'],
+                ['Birth Date', '13.06.24', 'birthDate'],
               ].map((v, i) => {
                 return (
                   <Input
                     key={i}
                     setChangeData={setChangeData}
-                    labelText={v[0]}
+                    arrValue={v}
                     flag={flag}
-                    placeholder={v[1]}
                     className={`${styles.formControl} ${styles.mb3}`}
                   />
                 );

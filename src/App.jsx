@@ -26,6 +26,7 @@ function App() {
   return (
     <div>
       <PageTracker />
+
       <Routes>
         <Route />
         <Route

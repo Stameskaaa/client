@@ -23,12 +23,6 @@
   gap: 10px;
   overflow: hidden;
   overflow-x: auto;
-  .img {
-    width: 100%;
-    height: auto;
-    max-width: 300px;
-    max-height: 200px;
-  }
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -48,6 +42,12 @@
   &::-webkit-scrollbar-thumb:hover {
     background: hwb(176 27% 46%);
   }
+}
+.img {
+  min-height: 100%;
+  width: auto;
+  max-width: 300px;
+  max-height: 200px;
 }
 .container {
   width: 100%;

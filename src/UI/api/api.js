@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const src = 'https://server-production-2c42.up.railway.app';
+const src = process.env.REACT_APP_SRC;
 const getUser = async (name) => {
   try {
     const response = await axios.get(`${src}/getuser?name=${name}`, {
@@ -141,11 +141,12 @@ const sendPost = async (formData) => {
 };
 
 const sendPhoto = async (formData) => {
-  axios.post(`${src}/sendPhoto`, formData, {
+  const request = await axios.post(`${src}/sendPhoto`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return request;
 };
 
 const loginUser = async (log, pass) => {
@@ -188,7 +189,24 @@ const registration = async (regAcc) => {
   return request;
 };
 
+const changeProfileData = async (profileDataObj, name) => {
+  const request = await axios.post(
+    `${src}/changeprofiledata`,
+    {
+      profileDataObj,
+      name,
+    },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+  return request;
+};
+
 export {
+  changeProfileData,
   getUserList,
   getUser,
   addFriend,

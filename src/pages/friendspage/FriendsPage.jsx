@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './friendspage.module.scss';
-import { useAppSelector } from '../../UI/hooks/hook';
+import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
 import { RightFriendBlock } from './rightfriendblock/RightFriendBlock';
 import { UsersList } from './UsersList';
 import {
@@ -11,6 +11,7 @@ import {
   getUserList,
   subscribe,
 } from '../../UI/api/api';
+import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
 
 export const FriendsPage = () => {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,8 @@ export const FriendsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const profileData = useAppSelector((state) => state.auth.profileData);
   const arr = [friends, subscribed, subscriber, users];
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const getAllUsersReq = async () => {
     try {
@@ -44,51 +47,50 @@ export const FriendsPage = () => {
     getAllUsersReq();
   }, []);
 
-  const cancelSubReq = async (name) => {
+  const handleRequest = async (name, func, type) => {
     try {
-      const response = await cancelSub(profileData.name, name);
+      setButtonLoading(true);
+      const response = await func(profileData.name, name);
+      dispatch(changeCurrentNotifcation({ text: response.data.text }));
+
       if (response.data.data) {
-        setSubscribed(response.data.data.subscribed.filter((v) => v));
-        setSubscriber(response.data.data.subscriber.filter((v) => v));
+        switch (type) {
+          case 'cancel':
+            setSubscribed(response.data.data.subscribed.filter((v) => v));
+            setSubscriber(response.data.data.subscriber.filter((v) => v));
+            break;
+          case 'add':
+            setFriends(response.data.data.friends.filter((v) => v));
+            setSubscriber(response.data.data.subscriber.filter((v) => v));
+            break;
+          case 'delete':
+            setFriends(response.data.data.friends.filter((v) => v));
+
+            break;
+          case 'sub':
+            setSubscribed(response.data.data.subscribed.filter((v) => v));
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setButtonLoading(false);
     }
   };
-  const deleteFriendReq = async (name) => {
-    try {
-      const response = await deletefriend(profileData.name, name);
-      console.log(response.data.text);
-      if (response.data.data) {
-        setFriends(response.data.data.friends.filter((v) => v));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
+  const cancelSubReq = (name) => {
+    handleRequest(name, cancelSub, 'cancel');
   };
-  const addFriendReq = async (name) => {
-    try {
-      const response = await addFriend(profileData.name, name);
-      console.log(response.data.text);
-      if (response.data.data) {
-        setFriends(response.data.data.friends.filter((v) => v));
-        setSubscriber(response.data.data.subscriber.filter((v) => v));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const deleteFriendReq = (name) => {
+    handleRequest(name, deletefriend, 'delete');
   };
-  const subscribeReq = async (name) => {
-    try {
-      const response = await subscribe(profileData.name, name);
-      console.log(response.data.text);
-      if (response.data.data) {
-        console.log(response.data);
-        setSubscribed(response.data.data.subscribed.filter((v) => v));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
+  const addFriendReq = (name) => {
+    handleRequest(name, addFriend, 'add');
+  };
+  const subscribeReq = (name) => {
+    handleRequest(name, subscribe, 'sub');
   };
 
   return (
@@ -111,8 +113,10 @@ export const FriendsPage = () => {
           loading={loading}
           currentList={arr[selectedCategory]}
           selectedCategory={selectedCategory}
+          buttonLoading={buttonLoading}
         />
       </div>
+
       <RightFriendBlock
         setSelectedCategory={setSelectedCategory}
         selectedCategory={selectedCategory}
