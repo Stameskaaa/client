@@ -3,13 +3,20 @@ import { ChatMessagesBlock } from '../ChatMessagesBlock';
 import { socket } from '../../../UI/socket/socket';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../../UI/hooks/hook';
+import { useAppDispatch, useAppSelector } from '../../../UI/hooks/hook';
 import { ChatUserHeader } from './chatuserheader/ChatUserHeader';
 import { IoIosSend } from 'react-icons/io';
-import { getPersonalMessage, getUser, sendMessage, uploadChat } from '../../../UI/api/api';
+import {
+  editMessage,
+  getPersonalMessage,
+  getUser,
+  sendMessage,
+  uploadChat,
+} from '../../../UI/api/api';
 import { RightSideChatLoader } from '../../../components/loaders/rightSide/RightSideChatLoader';
 import { TbMoodSmileBeam } from 'react-icons/tb';
 import { Emoji } from './emoji/Emoji';
+import { changeCurrentNotifcation } from '../../../UI/slices/notificationSlice';
 
 const arr = [
   '😀',
@@ -64,6 +71,11 @@ export const RightSideChat = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState('');
   const [visible, setVisible] = useState(false);
+  const [editMessState, setEditMessState] = useState(false);
+  const [selectedMess, setSelectedMess] = useState([]);
+
+  const dispatch = useAppDispatch();
+
   const timerRef = useRef('');
   const currentTime = new Date();
 
@@ -116,6 +128,10 @@ export const RightSideChat = () => {
     getUserReq();
     joinRoom();
     upLoadMess();
+    return () => {
+      setEditMessState(false);
+      setSelectedMess([]);
+    };
   }, [name]);
 
   const getUserReq = async () => {
@@ -145,6 +161,19 @@ export const RightSideChat = () => {
       if (chatExist !== '' && !chatExist) {
         await createChat();
       }
+      if (editMessState) {
+        setEditMessState(true);
+        const response = await editMessage(firstUser, name, {
+          indexToEdit: selectedMess[0],
+          message: value,
+        });
+        dispatch(changeCurrentNotifcation({ text: response.data.text }));
+        if (response.data.data) {
+          setLatestMessage(response.data.data);
+        }
+        setEditMessState(false);
+        return;
+      }
       socket.emit('message', {
         data: { user: firstUser, message: value, time: currentTime, status: 'read' },
       });
@@ -163,7 +192,18 @@ export const RightSideChat = () => {
   ) : (
     <div className={styles.container}>
       <ChatUserHeader userData={userData}></ChatUserHeader>
-      <ChatMessagesBlock userData={userData} latestMessage={latestMessage} messages={messages} />
+      <ChatMessagesBlock
+        setLatestMessage={setLatestMessage}
+        userData={userData}
+        latestMessage={latestMessage}
+        messages={messages}
+        setMessages={setMessages}
+        setValue={setValue}
+        setEditMessState={setEditMessState}
+        editMessState={editMessState}
+        selectedMess={selectedMess}
+        setSelectedMess={setSelectedMess}
+      />
       <div className={styles.sendmess_container}>
         <div
           className={`${styles.smile_container} ${visible ? styles.visible : null}`}

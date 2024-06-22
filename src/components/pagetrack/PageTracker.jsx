@@ -6,7 +6,7 @@ export const PageTracker = () => {
   const location = useLocation();
 
   const dispatch = useAppDispatch();
-  const arr = ['friends', 'message', 'mainpage', 'editprofile'];
+  const arr = ['friends', 'message', 'mainpage', 'editprofile', 'registration'];
   useEffect(() => {
     for (let i = 0; i < arr.length; i++) {
       if (location.pathname.includes(arr[i])) {

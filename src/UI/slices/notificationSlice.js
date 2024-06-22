@@ -9,7 +9,9 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     changeCurrentNotifcation(state, action) {
-      state.currentSlice = action.payload;
+      if (action.payload) {
+        state.currentSlice = action.payload;
+      }
     },
   },
 });

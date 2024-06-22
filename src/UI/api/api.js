@@ -205,8 +205,28 @@ const changeProfileData = async (profileDataObj, name) => {
   return request;
 };
 
+const deleteMessages = async (log, log2, arrayIndexes) => {
+  const response = await axios.post(
+    `${src}/deleteMessages?log1=${log}&log2=${log2}`,
+    { arrayIndexes },
+    { headers: { 'Content-Type': 'multipart/form-data' } },
+  );
+  return response;
+};
+
+const editMessage = async (log, log2, objectInfo) => {
+  const response = await axios.post(
+    `${src}/editMessage?log1=${log}&log2=${log2}`,
+    { objectInfo },
+    { headers: { 'Content-Type': 'multipart/form-data' } },
+  );
+  return response;
+};
+
 export {
   changeProfileData,
+  editMessage,
+  deleteMessages,
   getUserList,
   getUser,
   addFriend,

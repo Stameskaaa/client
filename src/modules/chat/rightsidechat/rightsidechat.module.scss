@@ -66,6 +66,8 @@
   overflow: hidden;
   border: 2px solid white;
   flex-wrap: wrap;
+  // top: 0;
+  bottom: 60px;
   gap: 10px;
   font-size: 2em;
   overflow-y: scroll;
@@ -97,6 +99,7 @@
 }
 
 .sendmess_container {
+  position: relative;
   flex: 0 0 auto;
   border: 1px solid var(--color-tertiary);
   border-radius: 5px;

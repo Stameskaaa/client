@@ -37,9 +37,10 @@ function App() {
             </LoginPage>
           }
         />
-        <Route path="/registration" element={<RegistrationForm />} />
+
         {/* <Route path="/rooms" element={<JoinRooms />} /> */}
         <Route path="/" element={<Layout />}>
+          <Route path="registration" element={<RegistrationForm />} />
           <Route
             path="/"
             element={

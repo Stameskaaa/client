@@ -161,8 +161,8 @@
 }
 
 .active_link {
-  background-color: var(--color-dark);
-  color: white;
+  background-color: var(--color-dark) !important;
+  color: white !important;
 }
 
 .header__icon_container {

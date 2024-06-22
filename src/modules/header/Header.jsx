@@ -72,8 +72,15 @@ export const Header = () => {
         </>
       ) : (
         <NavLink className={styles.active} to="/registration">
-          <div className={styles.link}>
-            <MdAppRegistration className={styles.registration_icon} /> Registration
+          <div
+            className={`${styles.link} ${getActiveClass('registration')}`}
+            // style={{ color: 'white' }}
+          >
+            <MdAppRegistration
+              className={styles.registration_icon}
+              // style={{ color: 'white' }}
+            />{' '}
+            Registration
           </div>
         </NavLink>
       )}
