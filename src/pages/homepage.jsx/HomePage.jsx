@@ -21,9 +21,9 @@ export const HomePage = () => {
         <BlogPost></BlogPost>
       </div>
       <div className={syles.main_rightWrapper}>
-        {profileObj.subscriber.length > 0 ? (
+        {/* {profileObj.subscriber.length > 0 ? (
           <FriendRequest profileObj={profileObj}></FriendRequest>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   );
