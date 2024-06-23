@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const src = process.env.REACT_APP_SRC;
+
 const getUser = async (name) => {
   try {
     const response = await axios.get(`${src}/getuser?name=${name}`, {
