@@ -59,7 +59,9 @@ export const LeftSideChat = () => {
         {chatList.length > 0 &&
           chatList
             .filter((v) => {
-              return `${v.name} ${v.lastName}`.toLowerCase().includes(value.toLowerCase());
+              return `${v.name} ${v.lastName ? v.lastName : null}`
+                .toLowerCase()
+                .includes(value.toLowerCase());
             })
             .map((v, i) => {
               return <LeftSideUser currentUser={currentUser} key={i} userData={v} />;

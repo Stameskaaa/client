@@ -17,7 +17,7 @@ export const ChatUserHeader = ({ userData }) => {
 
         <div className={styles.user_info}>
           <p>{userData.name}</p>
-          <p>last seen 15 min</p>
+          <p>{userData.status === 'online' ? 'Online' : 'last seen 15 min'}</p>
         </div>
         <div className={styles.container_buttons}>
           <IoMdSettings className={styles.button} />

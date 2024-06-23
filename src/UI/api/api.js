@@ -179,6 +179,7 @@ const registration = async (regAcc) => {
       martialStatus: 'unknown',
       location: 'unknown',
       photos: [''],
+      status: 'offline',
     },
     {
       headers: {
@@ -223,8 +224,14 @@ const editMessage = async (log, log2, objectInfo) => {
   return response;
 };
 
+const sendStatus = async (status, name) => {
+  const request = await axios.get(`${src}/sendstatus?status=${status}&name=${name}`);
+  return request;
+};
+
 export {
   changeProfileData,
+  sendStatus,
   editMessage,
   deleteMessages,
   getUserList,

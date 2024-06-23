@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 export const FullScreen = ({
@@ -8,10 +9,24 @@ export const FullScreen = ({
   currentIndex,
   setCurrentIndex = null,
 }) => {
+  const [changedArrPhoto, setChangedArrPhoto] = useState([]);
+
+  useEffect(() => {
+    if (arrPhoto.length > 0 && arrPhoto[0].buffer) {
+      setChangedArrPhoto(
+        arrPhoto.map((v) => {
+          return `data:image/png;base64,${v.buffer}`;
+        }),
+      );
+    } else {
+      setChangedArrPhoto(arrPhoto);
+    }
+  }, [arrPhoto]);
+
   return (
     <div onClick={onClick} className={styles.container}>
       <div onClick={(e) => e.stopPropagation()} className={styles['inner-container']}>
-        {arrPhoto.length > 1 && (
+        {changedArrPhoto.length > 1 && (
           <button
             disabled={currentIndex === 0}
             className={`${styles.button} ${styles.left} ${
@@ -28,15 +43,15 @@ export const FullScreen = ({
           onClick={() => {
             onClickInner && onClickInner();
           }}
-          src={arrPhoto[currentIndex] || src}
+          src={changedArrPhoto[currentIndex] || src}
           className={styles.photo}
         />
 
-        {arrPhoto.length > 1 && (
+        {changedArrPhoto.length > 1 && (
           <button
-            disabled={currentIndex === arrPhoto.length - 1}
+            disabled={currentIndex === changedArrPhoto.length - 1}
             className={`${styles.button} ${styles.right} ${
-              currentIndex === arrPhoto.length - 1 ? styles.inactive : styles.active
+              currentIndex === changedArrPhoto.length - 1 ? styles.inactive : styles.active
             }`}
             onClick={() => {
               setCurrentIndex && setCurrentIndex(currentIndex + 1);
@@ -45,9 +60,9 @@ export const FullScreen = ({
           </button>
         )}
       </div>
-      {arrPhoto.length > 1 ? (
+      {changedArrPhoto.length > 1 ? (
         <div className={styles.photo_count}>
-          {currentIndex + 1} из {arrPhoto.length}
+          {currentIndex + 1} из {changedArrPhoto.length}
         </div>
       ) : null}
     </div>

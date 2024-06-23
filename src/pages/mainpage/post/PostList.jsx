@@ -1,15 +1,27 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styles from '../mainpage.module.scss';
 import { ProfileImage } from '../../../components/profileimage/ProfileImage';
+import { FullScreen } from '../../../components/fullscreen/FullScreen';
 
 export const PostList = memo(({ userData, posts }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showPhoto, setShowPhoto] = useState(false);
+  const [arrPhoto, setArrPhoto] = useState([]);
+
   return (
     <>
       {posts.map((v, i) => {
         return (
           <div key={i} className={styles.rightside_post_container}>
             {i === 0 ? null : <hr className={styles.hr} />}
-
+            {showPhoto && (
+              <FullScreen
+                onClick={() => setShowPhoto(false)}
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
+                arrPhoto={arrPhoto}
+              />
+            )}
             <div className={styles.rightside_post}>
               <div className={styles.container_post__header}>
                 <ProfileImage src={userData.img} className={styles.test} />
@@ -39,6 +51,11 @@ export const PostList = memo(({ userData, posts }) => {
                 {v.files.map((imageObj, i) => {
                   return (
                     <img
+                      onClick={() => {
+                        setArrPhoto(v.files);
+                        setShowPhoto(true);
+                        setCurrentIndex(i);
+                      }}
                       alt="img"
                       className={styles.post__photo}
                       key={i}

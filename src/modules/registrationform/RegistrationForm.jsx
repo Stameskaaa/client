@@ -38,6 +38,7 @@ export const RegistrationForm = () => {
                 friends: [''],
                 subscriber: [''],
                 subscribed: [''],
+                status: 'offline',
               },
             }),
           );

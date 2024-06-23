@@ -18,7 +18,7 @@ import { TbMoodSmileBeam } from 'react-icons/tb';
 import { Emoji } from './emoji/Emoji';
 import { changeCurrentNotifcation } from '../../../UI/slices/notificationSlice';
 
-const arr = [
+const arrEmoji = [
   '😀',
   '😁',
   '😂',
@@ -209,8 +209,14 @@ export const RightSideChat = () => {
           className={`${styles.smile_container} ${visible ? styles.visible : null}`}
           onMouseMove={() => changeVisibility(true)}
           onMouseLeave={() => changeVisibility(false)}>
-          {arr.map((v, i) => (
-            <Emoji onClick={() => setValue((prev) => prev + v)} emoji={v} key={i} />
+          {arrEmoji.map((v, i) => (
+            <Emoji
+              onClick={() => {
+                setValue((prev) => prev + v);
+              }}
+              emoji={v}
+              key={i}
+            />
           ))}
         </div>
         <div
@@ -221,8 +227,7 @@ export const RightSideChat = () => {
             fontSize: '1.8em',
             borderRight: '1px solid var(--color-tertiary)',
           }}
-          className={styles.button}
-          onClick={sendMess}>
+          className={styles.button}>
           <TbMoodSmileBeam />
         </div>
         <textarea
