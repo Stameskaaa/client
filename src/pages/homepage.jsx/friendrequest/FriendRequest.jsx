@@ -71,24 +71,26 @@ export const FriendRequest = ({ profileObj }) => {
     loading ? (
       <FriendsReqLoader />
     ) : (
-      <div className={styles.container}>
-        Friend Request
-        <ProfileImage
-          onClick={() => navigate(`/mainpage/${requestList[indexState].name}`)}
-          className={styles.img}
-          src={requestList[indexState].img}
-        />
-        {requestList[indexState].name}{' '}
-        {requestList[indexState].lastName !== 'unknown' ? requestList[indexState].lastName : null}
-        <div className={styles.container_button}>
-          <button onClick={() => addFriendRequest(requestList[indexState].name)}>&#10003;</button>
-          <button
-            onClick={() => cancelSubRequest(requestList[indexState].name)}
-            style={{ fontSize: '1.5em' }}>
-            &#215;
-          </button>
+      requestList[indexState].img && (
+        <div className={styles.container}>
+          Friend Request
+          <ProfileImage
+            onClick={() => navigate(`/mainpage/${requestList[indexState].name}`)}
+            className={styles.img}
+            src={requestList[indexState].img}
+          />
+          {requestList[indexState].name}{' '}
+          {requestList[indexState].lastName !== 'unknown' ? requestList[indexState].lastName : null}
+          <div className={styles.container_button}>
+            <button onClick={() => addFriendRequest(requestList[indexState].name)}>&#10003;</button>
+            <button
+              onClick={() => cancelSubRequest(requestList[indexState].name)}
+              style={{ fontSize: '1.5em' }}>
+              &#215;
+            </button>
+          </div>
         </div>
-      </div>
+      )
     )
   ) : null;
 };
