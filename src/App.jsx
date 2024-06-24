@@ -37,7 +37,7 @@ function App() {
           }
         />
 
-        {/* <Route path="/rooms" element={<JoinRooms />} /> */}
+        <Route path="/rooms" element={<JoinRooms />} />
         <Route path="/" element={<Layout />}>
           <Route path="registration" element={<RegistrationForm />} />
           <Route
