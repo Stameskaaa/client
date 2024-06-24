@@ -13,6 +13,8 @@ export const PageTracker = () => {
   const arr = ['friends', 'message', 'mainpage', 'editprofile', 'registration'];
 
   useEffect(() => {
+    console.log('API URL:', process.env.REACT_APP_SRC);
+    console.log('API KEY:', process.env?.SRC);
     if (name !== 'loading') {
       sendStatus('online', name).then((response) =>
         dispatch(changeCurrentNotifcation({ text: response.data.text })),
