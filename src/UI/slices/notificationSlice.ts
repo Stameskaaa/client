@@ -1,6 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface Notification {
+  text: string;
+  name?: string;
+}
+
+interface NotificationState {
+  currentSlice: Notification | null;
+}
+
+const initialState: NotificationState = {
   currentSlice: null,
 };
 
@@ -8,7 +17,7 @@ const notificationSlice = createSlice({
   name: 'notificate',
   initialState,
   reducers: {
-    changeCurrentNotifcation(state, action) {
+    changeCurrentNotifcation(state, action: { payload: Notification }) {
       if (action.payload) {
         state.currentSlice = action.payload;
       }

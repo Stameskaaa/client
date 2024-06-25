@@ -5,12 +5,11 @@ import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
 import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
 import { sendStatus } from '../../UI/api/api';
 
-export const PageTracker = () => {
+export const PageTracker: React.FC = () => {
   const location = useLocation();
-
   const dispatch = useAppDispatch();
-  const name = useAppSelector((state) => state.auth.profileData.name);
-  const arr = ['friends', 'message', 'mainpage', 'editprofile', 'registration'];
+  const name = useAppSelector((state) => state.auth.profileData.name) as string;
+  const arr: string[] = ['friends', 'message', 'mainpage', 'editprofile', 'registration'];
 
   useEffect(() => {
     if (name !== 'loading') {

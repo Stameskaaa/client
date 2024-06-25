@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllUsers } from '../../UI/api/api';
 import styles from './input.module.scss';
 import { useAppSelector } from '../../UI/hooks/hook';
@@ -6,11 +6,26 @@ import { ProfileImage } from '../profileimage/ProfileImage';
 import { useClickOutside } from '../../UI/hooks/useClickOutside';
 import { useNavigate } from 'react-router-dom';
 
-export const Input = ({ styleObj, onChange, value }) => {
+interface Props {
+  value: string;
+  styleObj: styleObj;
+  onChange: (value: string) => void;
+}
+
+interface styleObj {
+  input: string;
+}
+
+interface UserObject {
+  name: string;
+  img: string;
+}
+
+export const Input: React.FC<Props> = ({ styleObj, onChange, value }) => {
   const profileData = useAppSelector((state) => state.auth.profileData);
-  const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<UserObject[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<UserObject[]>([]);
+  const [loading, setLoading] = useState<Boolean>(true);
   const [focus, setFocus] = useState(false);
   const navigate = useNavigate();
   const ref = useClickOutside(() => setFocus(false));
@@ -18,8 +33,10 @@ export const Input = ({ styleObj, onChange, value }) => {
   useEffect(() => {
     setLoading(true);
     getAllUsers(profileData.name)
-      .then((data) => setUsers(data.data.filter((v) => v.name !== profileData.name)))
-      .finally(setLoading(false));
+      .then((data) =>
+        setUsers(data.data.filter((object: UserObject) => object.name !== profileData.name)),
+      )
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {

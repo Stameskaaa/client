@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import general from '../generalClasses.module.scss';
-export const PostLoader = () => {
+export const PostLoader: React.FC = () => {
   return (
     <>
       {Array.from({ length: 3 }).map((_, i) => (

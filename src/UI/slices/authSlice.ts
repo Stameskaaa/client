@@ -19,7 +19,33 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 //   return 3;
 // });
 
-const initialState = {
+interface initialStateInterface {
+  authState: boolean;
+  profileData: profileData;
+  currentPage: StringAndNumber | '';
+}
+
+type StringAndNumber = number | string;
+
+type StringAndObject = object | string;
+
+interface profileData {
+  name: string;
+  age: string;
+  work: string;
+  friends: StringAndObject[] | 'loading';
+  img: string;
+  lastName: string;
+  _id: StringAndNumber;
+  posts: StringAndObject[] | '';
+  birthDate: string;
+  gender: string;
+  location: string;
+  martialStatus: string;
+  photos: StringAndObject[] | 'loading';
+}
+
+const initialState: initialStateInterface = {
   authState: false,
   profileData: {
     name: 'loading',
@@ -36,7 +62,7 @@ const initialState = {
     martialStatus: 'loading',
     photos: 'loading',
   },
-  curentPage: '',
+  currentPage: '',
 };
 
 const authSlice = createSlice({
@@ -57,7 +83,7 @@ const authSlice = createSlice({
         state.profileData = actions.payload;
       }
     },
-    updateCurrentPage(state, actions) {
+    updateCurrentPage(state, actions: { payload: string }) {
       state.currentPage = actions.payload;
     },
     resetStore() {

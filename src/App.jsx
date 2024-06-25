@@ -21,6 +21,8 @@ import { PageTracker } from './components/pagetrack/PageTracker';
 import { Profile } from './pages/EditProfile/Profile';
 import { Security } from './pages/EditProfile/Security';
 import { Notifications } from './pages/EditProfile/Notifications';
+import { JoinRooms } from './pages/rooms/roomsAuth';
+
 function App() {
   return (
     <div>

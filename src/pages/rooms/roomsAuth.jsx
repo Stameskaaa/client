@@ -5,6 +5,7 @@ import styles from './roomsauth.module.scss';
 import { useEffect, useState } from 'react';
 
 export const JoinRooms = () => {
+  console.log(1);
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [value, setValue] = useState('');
