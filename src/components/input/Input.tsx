@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getAllUsers } from '../../UI/api/api';
+import { useEffect, useState } from 'react';
+import { getAllUsers } from '../../api/api';
 import styles from './input.module.scss';
 import { useAppSelector } from '../../UI/hooks/hook';
 import { ProfileImage } from '../profileimage/ProfileImage';

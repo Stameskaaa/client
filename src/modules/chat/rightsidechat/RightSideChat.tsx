@@ -12,7 +12,7 @@ import {
   getUser,
   sendMessage,
   uploadChat,
-} from '../../../UI/api/api';
+} from '../../../api/api';
 import { RightSideChatLoader } from '../../../components/loaders/rightSide/RightSideChatLoader';
 import { TbMoodSmileBeam } from 'react-icons/tb';
 import { Emoji } from './emoji/Emoji';
@@ -61,22 +61,34 @@ const arrEmoji = [
   '🤑',
 ];
 
+interface Message {
+  time: Date;
+  user: string;
+  message: string;
+  status: string;
+}
+
+interface UserData {
+  name: string;
+  img: string;
+}
+
 export const RightSideChat = () => {
   const [value, setValue] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [latestMessage, setLatestMessage] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [latestMessage, setLatestMessage] = useState<Message[]>([]);
   const firstUser = useAppSelector((state) => state.auth.profileData.name);
-  let { name } = useParams();
-  const [chatExist, setChatExist] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState('');
+  const { name } = useParams<{ name: string }>();
+  const [chatExist, setChatExist] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [visible, setVisible] = useState(false);
   const [editMessState, setEditMessState] = useState(false);
-  const [selectedMess, setSelectedMess] = useState([]);
+  const [selectedMess, setSelectedMess] = useState<number[]>([]);
 
   const dispatch = useAppDispatch();
 
-  const timerRef = useRef('');
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const currentTime = new Date();
 
   const upLoadMess = async () => {
@@ -86,13 +98,13 @@ export const RightSideChat = () => {
         setChatExist(false);
       } else {
         setChatExist(true);
-        if (Array.isArray(response.data[0].chat)) setLatestMessage(response.data[0].chat);
+        if (Array.isArray(response.data[0]?.chat)) setLatestMessage(response.data[0].chat);
       }
       setLoading(false);
     });
   };
 
-  const changeVisibility = (flag) => {
+  const changeVisibility = (flag: boolean) => {
     if (flag) {
       timerRef.current && clearTimeout(timerRef.current);
       setVisible(flag);
@@ -116,7 +128,7 @@ export const RightSideChat = () => {
   }, []);
 
   useEffect(() => {
-    socket.on('messageReceived', (data) => {
+    socket.on('messageReceived', (data: Message) => {
       setMessages((prev) => [...prev, data]);
     });
     return () => {
@@ -156,13 +168,16 @@ export const RightSideChat = () => {
     }
   };
 
+  const addEmoji = (value: string) => {
+    setValue((prev) => prev + value);
+  };
+
   const sendMess = async () => {
     if (value) {
-      if (chatExist !== '' && !chatExist) {
+      if (!chatExist) {
         await createChat();
       }
-      if (editMessState) {
-        setEditMessState(true);
+      if (editMessState && selectedMess.length === 1) {
         const response = await editMessage(firstUser, name, {
           indexToEdit: selectedMess[0],
           message: value,
@@ -172,17 +187,16 @@ export const RightSideChat = () => {
           setLatestMessage(response.data.data);
         }
         setEditMessState(false);
-        return;
+      } else {
+        socket.emit('message', {
+          data: { user: firstUser, message: value, time: currentTime, status: 'read' },
+        });
+        setMessages((prev) => [
+          ...prev,
+          { user: firstUser, message: value, time: currentTime, status: 'read' },
+        ]);
+        sendMessage(firstUser, name, value, currentTime).catch((e) => console.log(e));
       }
-      socket.emit('message', {
-        data: { user: firstUser, message: value, time: currentTime, status: 'read' },
-      });
-      setMessages((prev) => [
-        ...prev,
-        { user: firstUser, message: value, time: currentTime, status: 'read' },
-      ]);
-
-      sendMessage(firstUser, name, value, currentTime).catch((e) => console.log(e));
       setValue('');
     }
   };
@@ -210,13 +224,7 @@ export const RightSideChat = () => {
           onMouseMove={() => changeVisibility(true)}
           onMouseLeave={() => changeVisibility(false)}>
           {arrEmoji.map((v, i) => (
-            <Emoji
-              onClick={() => {
-                setValue((prev) => prev + v);
-              }}
-              emoji={v}
-              key={i}
-            />
+            <Emoji onClick={() => addEmoji(v)} emoji={v} key={i} />
           ))}
         </div>
         <div

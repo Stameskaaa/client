@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './friendrequest.module.scss';
-import { addFriend, cancelSub, getUserList } from '../../../UI/api/api';
+import { addFriend, cancelSub, getUserList } from '../../../api/api';
 import { ProfileImage } from '../../../components/profileimage/ProfileImage';
 import { useNavigate } from 'react-router-dom';
 import { FriendsReqLoader } from '../../../components/loaders/friendsreq/FriendsReq';

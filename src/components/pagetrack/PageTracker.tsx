@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { updateCurrentPage } from '../../UI/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
 import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
-import { sendStatus } from '../../UI/api/api';
+import { sendStatus } from '../../api/api';
 
 export const PageTracker: React.FC = () => {
   const location = useLocation();

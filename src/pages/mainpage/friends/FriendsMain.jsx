@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './friendsmain.module.scss';
 import { useAppSelector } from '../../../UI/hooks/hook';
 import { ProfileImage } from '../../../components/profileimage/ProfileImage';
-import { getUserList } from '../../../UI/api/api';
+import { getUserList } from '../../../api/api';
 import { CircularProgress } from '@mui/material';
 
 export const FriendsMain = () => {

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from './switch.module.scss';
 
-export const SwitchButton = () => {
-  const [isDark, setIsDark] = useState(false);
+export const SwitchButton: React.FC = () => {
+  const [isDark, setIsDark] = useState<Boolean>(false);
 
   const handleToggle = () => {
     setIsDark(!isDark);

@@ -3,7 +3,7 @@ import styles from './messagepage.module.scss';
 import { MessageBlock } from '../../modules/messageblock/MessageBlock';
 import { OutOfMessage } from './outofmessage/OutOfMessage';
 import { useAppSelector } from '../../UI/hooks/hook';
-import { uploadMessage } from '../../UI/api/api';
+import { uploadMessage } from '../../api/api';
 import { MessageBlockLoader } from '../../components/loaders/messageBlockLoader/MessageBlockLoader';
 
 export const MessagePage = () => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { authStateCheck } from '../slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/hook';
 import styles from './hocauth.module.scss';
-import { loginUser } from '../api/api';
+import { loginUser } from '../../api/api';
 export const LoginPage = ({ children }) => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);

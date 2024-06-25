@@ -5,7 +5,7 @@ import { PostList } from './post/PostList';
 import { useAppSelector } from '../../UI/hooks/hook';
 import { InputFile } from './InputFile';
 import { FileList } from './FileList';
-import { getUser, sendPost } from '../../UI/api/api';
+import { getUser, sendPost } from '../../api/api';
 import { PostLoader } from '../../components/loaders/post/PostLoader';
 export const RightSideMain = () => {
   const [posts, setPosts] = useState([]);

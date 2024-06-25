@@ -1,7 +1,7 @@
 import styles from './aboutmain.module.scss';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUser } from '../../../UI/api/api';
+import { getUser } from '../../../api/api';
 import { CircularProgress } from '@mui/material';
 export const AboutMain = () => {
   const [info, setInfo] = useState({});

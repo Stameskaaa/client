@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './messagebloack.module.scss';
 import { ProfileImage } from '../../components/profileimage/ProfileImage';
 import { useNavigate } from 'react-router-dom';
-import { getUser } from '../../UI/api/api';
+import { getUser } from '../../api/api';
 import { MessageBlockLoader } from '../../components/loaders/messageBlockLoader/MessageBlockLoader';
 
 export const MessageBlock = ({ text = '', time = null, nameSecond }) => {

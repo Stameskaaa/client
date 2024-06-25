@@ -5,7 +5,7 @@ import { ProfileImage } from '../../components/profileimage/ProfileImage';
 import { DefaultButton } from '../../components/button/DefaultButton';
 import { Input } from './Input';
 import { UploadImage } from './UploadImage';
-import { changeProfileData } from '../../UI/api/api';
+import { changeProfileData } from '../../api/api';
 import { updateProfileData } from '../../UI/slices/authSlice';
 import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
 
