@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-export const Emoji = ({ emoji, onClick = null }) => {
+export const Emoji = ({ emoji, onClick }) => {
   if (!emoji) {
     return null;
   }

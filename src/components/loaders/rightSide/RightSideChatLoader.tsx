@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import general from '../generalClasses.module.scss';
-export const RightSideChatLoader = () => {
+export const RightSideChatLoader: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>

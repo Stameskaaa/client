@@ -2,19 +2,26 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useAppSelector } from '../../UI/hooks/hook';
 
-export const NotificationList = () => {
-  const [currentNotifications, setCurrentNotifications] = useState([]);
-  const [disabledNotification, setDisabledNotification] = useState([]);
+interface Notification {
+  text: string;
+  name?: string;
+}
+
+type ArrayIndexes = number[];
+
+export const NotificationList: React.FC = () => {
+  const [currentNotifications, setCurrentNotifications] = useState<Notification[]>([]);
+  const [disabledNotification, setDisabledNotification] = useState<ArrayIndexes>([]);
   const notficateFromStore = useAppSelector((state) => state.notificate.currentSlice);
 
   useEffect(() => {
-    if (notficateFromStore?.text) {
+    if (notficateFromStore && notficateFromStore?.text) {
       setCurrentNotifications((prev) => [...prev, notficateFromStore]);
       clearCurrentNotification(currentNotifications.length);
     }
   }, [notficateFromStore]);
 
-  const clearCurrentNotification = (indexToRemove) => {
+  const clearCurrentNotification = (indexToRemove: number) => {
     setTimeout(() => {
       setDisabledNotification((prev) => [...prev, indexToRemove]);
     }, 9000);

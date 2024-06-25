@@ -1,25 +1,39 @@
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
-export const FullScreen = ({
-  src = process.env.REACT_APP_SRC,
-  onClick = null,
+interface Props {
+  src: string;
+  setCurrentIndex: (index: number) => void;
+  currentIndex: number;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClickInner?: (event: React.MouseEvent<HTMLImageElement>) => void;
+  arrPhoto: string[] | PhotoObject[];
+}
+
+interface PhotoObject {
+  buffer: string;
+  [key: string]: any;
+}
+
+export const FullScreen: React.FC<Props> = ({
+  src = process.env.REACT_APP_SRC || '',
+  onClick,
   onClickInner = null,
   arrPhoto,
   currentIndex,
   setCurrentIndex = null,
 }) => {
-  const [changedArrPhoto, setChangedArrPhoto] = useState([]);
+  const [changedArrPhoto, setChangedArrPhoto] = useState<string[]>([]);
 
   useEffect(() => {
-    if (arrPhoto.length > 0 && arrPhoto[0].buffer) {
+    if (arrPhoto.length > 0 && typeof arrPhoto[0] === 'object') {
       setChangedArrPhoto(
-        arrPhoto.map((v) => {
+        (arrPhoto as PhotoObject[]).map((v) => {
           return `data:image/png;base64,${v.buffer}`;
         }),
       );
     } else {
-      setChangedArrPhoto(arrPhoto);
+      setChangedArrPhoto(arrPhoto as string[]);
     }
   }, [arrPhoto]);
 
@@ -40,8 +54,8 @@ export const FullScreen = ({
         )}
 
         <img
-          onClick={() => {
-            onClickInner && onClickInner();
+          onClick={(e) => {
+            onClickInner && onClickInner(e);
           }}
           src={changedArrPhoto[currentIndex] || src}
           className={styles.photo}

@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import general from '../generalClasses.module.scss';
-export const LeftSideChatLoading = ({ userData, currentUser }) => {
+
+export const LeftSideChatLoading: React.FC = () => {
   return (
     <>
       <div className={`${styles.rectangle} ${general.animation}`} />

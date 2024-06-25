@@ -1,9 +1,8 @@
 import styles from './chat.module.scss';
-
 import { LeftSideChat } from './leftsidechat/LeftSideChat';
 import { RightSideChat } from './rightsidechat/RightSideChat';
 
-export const ChatRoom = () => {
+export const ChatRoom: React.FC = () => {
   return (
     <>
       <div className={styles.container}>

@@ -10,7 +10,7 @@ import {
   getAllUsers,
   getUserList,
   subscribe,
-} from '../../UI/api/api';
+} from '../../api/api';
 import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
 
 export const FriendsPage = () => {

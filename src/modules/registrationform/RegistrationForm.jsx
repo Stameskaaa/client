@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../UI/hooks/hook';
 import { authStateCheck } from '../../UI/slices/authSlice';
 import { SuccessRegistration } from './succesregistration/SuccessRegistration';
 import { useNavigate } from 'react-router-dom';
-import { registration } from '../../UI/api/api';
+import { registration } from '../../api/api';
 
 const inputArr = [
   { type: 'text', placeholder: 'name', important: true },

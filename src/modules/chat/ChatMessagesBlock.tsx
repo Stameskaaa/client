@@ -6,7 +6,7 @@ import { HiMiniXMark } from 'react-icons/hi2';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { DefaultButton } from '../../components/button/DefaultButton';
 import { MdEdit } from 'react-icons/md';
-import { deleteMessages } from '../../UI/api/api';
+import { deleteMessages } from '../../api/api';
 import { CircularProgress } from '@mui/material';
 import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
 const monthNames = [
@@ -23,7 +23,33 @@ const monthNames = [
   'ноября',
   'декабря',
 ];
-export const ChatMessagesBlock = memo(
+
+interface Message {
+  time: Date;
+  user: string;
+  message: string;
+  status: string;
+}
+
+interface ChatMessagesBlockProps {
+  setLatestMessage: React.Dispatch<React.SetStateAction<Message[]>>;
+  userData: UserData | null;
+  latestMessage: Message[];
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setEditMessState: React.Dispatch<React.SetStateAction<boolean>>;
+  editMessState: boolean;
+  selectedMess: number[];
+  setSelectedMess: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+interface UserData {
+  name: string;
+  img: string;
+}
+
+export const ChatMessagesBlock: React.FC<ChatMessagesBlockProps> = memo(
   ({
     userData,
     latestMessage,
@@ -36,11 +62,11 @@ export const ChatMessagesBlock = memo(
     setSelectedMess,
     selectedMess,
   }) => {
-    const [flag, setFlag] = useState(false);
+    const [flag, setFlag] = useState<boolean>(false);
     const firstUserData = useAppSelector((state) => state.auth.profileData);
-    const [resultMessages, setResultMessages] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
+    const [resultMessages, setResultMessages] = useState<Message[]>([]);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -56,7 +82,7 @@ export const ChatMessagesBlock = memo(
       setValue('');
     }, [messages, latestMessage]);
 
-    const selectMessage = (index) => {
+    const selectMessage = (index: number) => {
       if (selectedMess.includes(index)) {
         setSelectedMess((prev) => prev.filter((v) => v !== index));
       } else {
@@ -71,9 +97,9 @@ export const ChatMessagesBlock = memo(
       }
     }, [selectedMess]);
 
-    const formatDate = (date) => {
+    const formatDate = (date: Date) => {
       const now = new Date();
-      const diff = now - date;
+      const diff = now.getTime() - date.getTime();
 
       const ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -92,7 +118,9 @@ export const ChatMessagesBlock = memo(
     const deleteMessage = async () => {
       try {
         setDeleteLoading(true);
-        const response = await deleteMessages(userData.name, firstUserData.name, selectedMess);
+
+        const response = await deleteMessages(userData?.name, firstUserData.name, selectedMess);
+
         dispatch(changeCurrentNotifcation({ text: response.data?.text }));
         if (response.data?.data) {
           setLatestMessage(response.data?.data);
@@ -146,17 +174,17 @@ export const ChatMessagesBlock = memo(
                       selectedMess.includes(i) ? styles.active : null
                     }`}>
                     <div className={styles.messagefield__author}>
-                      <ProfileImage
-                        src={firstUserData.name === v.user ? firstUserData.img : userData.img}
-                        className={styles.author_img}
-                      />
+                      {userData && (
+                        <ProfileImage
+                          src={firstUserData.name === v.user ? firstUserData.img : userData.img}
+                          className={styles.author_img}
+                        />
+                      )}
 
                       <p>{v.user}</p>
                       <p style={{ marginLeft: 'auto' }}>{formatDate(dateObject)}</p>
                     </div>
-                    <div className={styles.messagefield__content} key={i}>
-                      {v.message}
-                    </div>
+                    <div className={styles.messagefield__content}>{v.message}</div>
                   </div>
                 );
               })

@@ -1,6 +1,12 @@
 import styles from './switch2.module.scss';
 
-export const Switch = ({ onChange, isChecked, className }) => {
+interface Props {
+  onChange: () => void;
+  isChecked: boolean;
+  className: string;
+}
+
+export const Switch: React.FC<Props> = ({ onChange, isChecked, className }) => {
   return (
     <label className={`${styles.switch} ${className}`}>
       <input type="checkbox" checked={isChecked} onChange={onChange} />

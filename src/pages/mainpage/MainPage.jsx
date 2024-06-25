@@ -10,7 +10,7 @@ import { FaPen } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { UnSub } from './UnSub';
 import { ProfileImage } from '../../components/profileimage/ProfileImage';
-import { cancelSub, checkdependence, deletefriend, getUser, subscribe } from '../../UI/api/api';
+import { cancelSub, checkdependence, deletefriend, getUser, subscribe } from '../../api/api';
 import { FullScreen } from '../../components/fullscreen/FullScreen';
 import { ImExit } from 'react-icons/im';
 import { resetStore } from '../../UI/slices/authSlice';

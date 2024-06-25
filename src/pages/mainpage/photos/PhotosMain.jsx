@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { FileList } from '../FileList';
 import styleButt from '../mainpage.module.scss';
 import { useAppSelector } from '../../../UI/hooks/hook';
-import { getPhotos, sendPhoto } from '../../../UI/api/api';
+import { getPhotos, sendPhoto } from '../../../api/api';
 import { CircularProgress } from '@mui/material';
 import { FullScreen } from '../../../components/fullscreen/FullScreen';
 

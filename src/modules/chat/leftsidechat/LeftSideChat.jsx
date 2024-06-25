@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './leftsidechat.module.scss';
 import { useAppSelector } from '../../../UI/hooks/hook';
 import { useParams } from 'react-router-dom';
-import { getUser, getUserChats } from '../../../UI/api/api';
+import { getUser, getUserChats } from '../../../api/api';
 import { LeftSideChatLoading } from '../../../components/loaders/leftSide/leftSideChatLoader';
 import { LeftSideUser } from './leftsideuser/LeftSideUser';
 
