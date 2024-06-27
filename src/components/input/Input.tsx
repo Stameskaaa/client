@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface styleObj {
-  input: string;
+  [key: string]: string;
 }
 
 interface UserObject {

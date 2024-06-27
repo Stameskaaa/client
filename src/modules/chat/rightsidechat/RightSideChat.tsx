@@ -17,6 +17,7 @@ import { RightSideChatLoader } from '../../../components/loaders/rightSide/Right
 import { TbMoodSmileBeam } from 'react-icons/tb';
 import { Emoji } from './emoji/Emoji';
 import { changeCurrentNotifcation } from '../../../UI/slices/notificationSlice';
+import { UserData, Messages, UserDataInnerList, Message } from '../../../types/interfaces';
 
 const arrEmoji = [
   '😀',
@@ -61,24 +62,12 @@ const arrEmoji = [
   '🤑',
 ];
 
-interface Message {
-  time: Date;
-  user: string;
-  message: string;
-  status: string;
-}
-
-interface UserData {
-  name: string;
-  img: string;
-}
-
 export const RightSideChat = () => {
   const [value, setValue] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [latestMessage, setLatestMessage] = useState<Message[]>([]);
   const firstUser = useAppSelector((state) => state.auth.profileData.name);
-  const { name } = useParams<{ name: string }>();
+  const { name } = useParams();
   const [chatExist, setChatExist] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -89,16 +78,19 @@ export const RightSideChat = () => {
   const dispatch = useAppDispatch();
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const currentTime = new Date();
+  const currentTime = new Date().toString();
 
   const upLoadMess = async () => {
     setLoading(true);
-    getPersonalMessage(firstUser, name).then((response) => {
-      if (response.data === 'nothing') {
+
+    getPersonalMessage(firstUser, name as string).then((response) => {
+      if (typeof response.data === 'string') {
         setChatExist(false);
       } else {
         setChatExist(true);
-        if (Array.isArray(response.data[0]?.chat)) setLatestMessage(response.data[0].chat);
+
+        if (Array.isArray(response.data) && response.data[0])
+          setLatestMessage(response.data[0].chat);
       }
       setLoading(false);
     });
@@ -147,8 +139,12 @@ export const RightSideChat = () => {
   }, [name]);
 
   const getUserReq = async () => {
-    const data = await getUser(name);
-    setUserData(data);
+    if (name) {
+      const data = await getUser(name);
+      if (data) {
+        setUserData(data);
+      }
+    }
   };
 
   const joinRoom = async () => {
@@ -159,9 +155,12 @@ export const RightSideChat = () => {
 
   const createChat = async () => {
     try {
-      const data = await uploadChat(firstUser, name);
-      if (data.data === 'Чат успешно создан') {
-        setChatExist(true);
+      if (name) {
+        const data = await uploadChat(firstUser, name);
+
+        if (typeof data.data === 'string') {
+          setChatExist(true);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -173,7 +172,7 @@ export const RightSideChat = () => {
   };
 
   const sendMess = async () => {
-    if (value) {
+    if (value && name) {
       if (!chatExist) {
         await createChat();
       }
@@ -205,7 +204,7 @@ export const RightSideChat = () => {
     <RightSideChatLoader />
   ) : (
     <div className={styles.container}>
-      <ChatUserHeader userData={userData}></ChatUserHeader>
+      {userData && <ChatUserHeader userData={userData}></ChatUserHeader>}
       <ChatMessagesBlock
         setLatestMessage={setLatestMessage}
         userData={userData}

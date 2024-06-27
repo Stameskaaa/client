@@ -9,6 +9,7 @@ import { MdEdit } from 'react-icons/md';
 import { deleteMessages } from '../../api/api';
 import { CircularProgress } from '@mui/material';
 import { changeCurrentNotifcation } from '../../UI/slices/notificationSlice';
+import { UserData, Message } from '../../types/interfaces';
 const monthNames = [
   'января',
   'февраля',
@@ -24,13 +25,6 @@ const monthNames = [
   'декабря',
 ];
 
-interface Message {
-  time: Date;
-  user: string;
-  message: string;
-  status: string;
-}
-
 interface ChatMessagesBlockProps {
   setLatestMessage: React.Dispatch<React.SetStateAction<Message[]>>;
   userData: UserData | null;
@@ -42,11 +36,6 @@ interface ChatMessagesBlockProps {
   editMessState: boolean;
   selectedMess: number[];
   setSelectedMess: React.Dispatch<React.SetStateAction<number[]>>;
-}
-
-interface UserData {
-  name: string;
-  img: string;
 }
 
 export const ChatMessagesBlock: React.FC<ChatMessagesBlockProps> = memo(
@@ -118,12 +107,12 @@ export const ChatMessagesBlock: React.FC<ChatMessagesBlockProps> = memo(
     const deleteMessage = async () => {
       try {
         setDeleteLoading(true);
-
-        const response = await deleteMessages(userData?.name, firstUserData.name, selectedMess);
-
-        dispatch(changeCurrentNotifcation({ text: response.data?.text }));
-        if (response.data?.data) {
-          setLatestMessage(response.data?.data);
+        if (userData) {
+          const response = await deleteMessages(userData.name, firstUserData.name, selectedMess);
+          dispatch(changeCurrentNotifcation({ text: response.data?.text }));
+          if (response.data?.data) {
+            setLatestMessage(response.data?.data);
+          }
         }
       } catch (error) {
         console.log(error);
