@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { UserData } from '../../types/interfaces';
 
 // export const fetchProfileData = createAsyncThunk('auth/fetchProfileData', async () => {
 //   // const response = await axios.get('http://localhost:5000/getuserInfo', {
@@ -21,28 +22,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 interface initialStateInterface {
   authState: boolean;
-  profileData: profileData;
-  currentPage: StringAndNumber | '';
-}
-
-type StringAndNumber = number | string;
-
-type StringAndObject = object | string;
-
-interface profileData {
-  name: string;
-  age: string;
-  work: string;
-  friends: StringAndObject[] | 'loading';
-  img: string;
-  lastName: string;
-  _id: StringAndNumber;
-  posts: StringAndObject[] | '';
-  birthDate: string;
-  gender: string;
-  location: string;
-  martialStatus: string;
-  photos: StringAndObject[] | 'loading';
+  profileData: UserData;
+  currentPage: string;
 }
 
 const initialState: initialStateInterface = {
@@ -51,16 +32,15 @@ const initialState: initialStateInterface = {
     name: 'loading',
     age: 'loading',
     work: 'loading',
-    friends: 'loading',
     img: 'loading',
     lastName: 'loading',
     _id: 'loading',
-    posts: '',
+    posts: [],
     birthDate: 'loading',
     gender: 'loading',
     location: 'loading',
     martialStatus: 'loading',
-    photos: 'loading',
+    photos: [],
   },
   currentPage: '',
 };

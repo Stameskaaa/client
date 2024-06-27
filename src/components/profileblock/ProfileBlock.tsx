@@ -3,11 +3,12 @@ import styles from './profileblock.module.scss';
 import { useAppSelector } from '../../UI/hooks/hook';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getUser } from '../../api/api';
+import { UserData } from '../../types/interfaces';
 
 export const ProfileBlock: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const profileObj = useAppSelector((state) => state.auth.profileData);
-  const [currentProfile, setCurrentProfile] = useState(profileObj);
+  const [currentProfile, setCurrentProfile] = useState<UserData>(profileObj);
   const navigate = useNavigate();
   let { name } = useParams();
   const [privateProfile, setPrivateProfile] = useState(() =>
@@ -20,9 +21,11 @@ export const ProfileBlock: React.FC = () => {
       setPrivateProfile(true);
       setLoading(false);
     } else {
-      getUser(name)
+      getUser(name as string)
         .then((res) => {
-          setCurrentProfile(res.data[0]);
+          if (res) {
+            setCurrentProfile(res);
+          }
           setPrivateProfile(false);
           setLoading(false);
         })

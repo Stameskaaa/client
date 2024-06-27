@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-
+import { UnionFileBuffer } from '../../types/interfaces';
 interface Props {
-  src: string;
+  src?: string;
   setCurrentIndex: (index: number) => void;
   currentIndex: number;
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   onClickInner?: (event: React.MouseEvent<HTMLImageElement>) => void;
-  arrPhoto: string[] | PhotoObject[];
-}
-
-interface PhotoObject {
-  buffer: string;
-  [key: string]: any;
+  arrPhoto: string[] | UnionFileBuffer[];
 }
 
 export const FullScreen: React.FC<Props> = ({
@@ -28,7 +23,7 @@ export const FullScreen: React.FC<Props> = ({
   useEffect(() => {
     if (arrPhoto.length > 0 && typeof arrPhoto[0] === 'object') {
       setChangedArrPhoto(
-        (arrPhoto as PhotoObject[]).map((v) => {
+        (arrPhoto as UnionFileBuffer[]).map((v) => {
           return `data:image/png;base64,${v.buffer}`;
         }),
       );

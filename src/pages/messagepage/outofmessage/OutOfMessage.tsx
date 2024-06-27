@@ -1,5 +1,5 @@
 import styles from './outofmessage.module.scss';
-export const OutOfMessage = () => {
+export const OutOfMessage: React.FC = () => {
   return (
     <div className={styles.container}>
       <img
